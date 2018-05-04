@@ -36,7 +36,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         robots = new HashMap<>();
         
-        Shelf s1 = new Shelf("navn", new Vector2(4,5), );
+        Shelf s1 = new Shelf("navn", new Vector2(4,5));
         
 
         
