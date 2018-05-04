@@ -30,9 +30,9 @@ public class Shelf {
     public Vector2 getPos() {
         return pos;
     }
-
-    public Map<String, Property> getProperties() {
-        return properties;
+    
+    public Property getProperty(String key){
+        return properties.get(key);
     }
     
     public void addProperty(String name, Property p) {
