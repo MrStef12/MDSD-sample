@@ -12,26 +12,29 @@ import javafx.scene.control.Label;
  * @author ditlev
  */
 public class Robot extends Label {
-    private Vector2 startpoint;
+    private Vector2 pos;
     private Mission mission;
 
     public Robot(String name, Vector2 startpoint, Mission mission) {
         super(name);
-        this.startpoint = startpoint;
+        this.pos = startpoint;
         this.mission = mission;
     }
 
     public String getName() {
-        return this.textProperty().toString();
+        return this.getText();
     }
     
-    public Vector2 getStartpoint() {
-        return startpoint;
+    public Vector2 getPos() {
+        return pos;
     }
 
     public Mission getMission() {
         return mission;
     }
     
-    
+    public void execute() {
+        Task t = mission.getNextTask();
+        
+    }
 }

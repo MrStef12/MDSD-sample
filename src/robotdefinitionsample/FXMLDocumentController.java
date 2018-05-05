@@ -6,8 +6,8 @@
 package robotdefinitionsample;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.models.Mission;
+import robotdefinitionsample.models.Obstacle;
 import robotdefinitionsample.models.Robot;
 import robotdefinitionsample.models.Shelf;
 import robotdefinitionsample.models.Vector2;
@@ -30,21 +31,22 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label Robot;
     
-    private Map<String, Robot> robots;
-    private Map<String, Label> obstacles;
+    private List<Robot> robots;
+    private List<Obstacle> obstacles;
+    private List<Shelf> shelfs;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        robots = new HashMap<>();
-        obstacles = new HashMap<>();
+        robots = new ArrayList<>();
+        obstacles = new ArrayList<>();
         
         Shelf s1 = new Shelf("navn", new Vector2(4,5));
         Robot r = new Robot("name", new Vector2(4,5), new Mission());
         
-        robots.put(r.getName(), r);
+        robots.add(r);
         
-        grid.add(r, 0, 0);
+        grid.add(r, r.getPos().getX(), r.getPos().getY());
         
     }
 
@@ -54,12 +56,18 @@ public class FXMLDocumentController implements Initializable {
         //Try to drag the text robot in the grid to trigger
         //this event
         
-        Robot l = robots.get("name");
+        Robot l = robots.get(0);
         
         grid.getChildren().remove(l);
         grid.add(l, 9, 9);
-        
-        System.out.println("relocate");
+    }
+    
+    private void tick() {
+        for (Robot r : robots) {
+            r.execute();
+            grid.getChildren().remove(r);
+            grid.add(r, r.getPos().getX(), r.getPos().getY());
+        }
     }
     
 }

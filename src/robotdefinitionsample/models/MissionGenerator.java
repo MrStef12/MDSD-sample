@@ -14,7 +14,7 @@ public class MissionGenerator {
     
     public static Mission Robot1() {
         Mission m = new Mission();
-        Task t = new Task();
+        Task t = new Task("robotname");
         return m;
     }
     

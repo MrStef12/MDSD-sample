@@ -7,24 +7,24 @@ package robotdefinitionsample.models;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.control.Label;
 
 /**
  *
  * @author ditlev
  */
-public class Shelf {
-    private String name;
+public class Shelf extends Label{
     private Vector2 pos;
     private Map<String, Property> properties;
 
     public Shelf(String name, Vector2 pos) {
-        this.name = name;
+        super(name);
         this.pos = pos;
         this.properties = new HashMap<>();
     }
 
     public String getName() {
-        return name;
+        return this.getText();
     }
 
     public Vector2 getPos() {

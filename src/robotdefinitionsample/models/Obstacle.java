@@ -5,23 +5,24 @@
  */
 package robotdefinitionsample.models;
 
+import javafx.scene.control.Label;
+
 /**
  *
  * @author ditlev
  */
-public class Obstacle {
-    private String name;
+public class Obstacle extends Label {
     private Vector2 pos;
     private Vector2 size;
 
     public Obstacle(String name, Vector2 pos, Vector2 size) {
-        this.name = name;
+        super(name);
         this.pos = pos;
         this.size = size;
     }
 
     public String getName() {
-        return name;
+        return this.getText();
     }
 
     public Vector2 getPos() {
