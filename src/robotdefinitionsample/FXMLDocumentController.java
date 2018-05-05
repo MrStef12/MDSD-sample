@@ -31,7 +31,6 @@ public class FXMLDocumentController implements Initializable {
     private Label Robot;
     
     private Map<String, Robot> robots;
-    private Map<String, Label> robotsOnGrid;
     private Map<String, Label> obstacles;
 
     
@@ -39,17 +38,13 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         robots = new HashMap<>();
         obstacles = new HashMap<>();
-        robotsOnGrid = new HashMap<>();
         
         Shelf s1 = new Shelf("navn", new Vector2(4,5));
         Robot r = new Robot("name", new Vector2(4,5), new Mission());
         
         robots.put(r.getName(), r);
-        Label l = new Label(r.getName());
         
-        robotsOnGrid.put(r.getName(), l);
-        
-        grid.add(l, 0, 0);
+        grid.add(r, 0, 0);
         
     }
 
@@ -59,7 +54,7 @@ public class FXMLDocumentController implements Initializable {
         //Try to drag the text robot in the grid to trigger
         //this event
         
-        Label l = robotsOnGrid.get("name");
+        Robot l = robots.get("name");
         
         grid.getChildren().remove(l);
         grid.add(l, 9, 9);

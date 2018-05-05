@@ -19,6 +19,10 @@ public class Mission {
         currentTask = 0;
     }
     
+    public void addTask(Task t) {
+        mission.add(t);
+    }
+    
     public Task getNextTask() {
         Task t = mission.get(currentTask);
         currentTask++;

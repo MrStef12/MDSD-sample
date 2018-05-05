@@ -5,25 +5,26 @@
  */
 package robotdefinitionsample.models;
 
+import javafx.scene.control.Label;
+
 /**
  *
  * @author ditlev
  */
-public class Robot {
-    private String name;
+public class Robot extends Label {
     private Vector2 startpoint;
     private Mission mission;
 
     public Robot(String name, Vector2 startpoint, Mission mission) {
-        this.name = name;
+        super(name);
         this.startpoint = startpoint;
         this.mission = mission;
     }
 
     public String getName() {
-        return name;
+        return this.textProperty().toString();
     }
-
+    
     public Vector2 getStartpoint() {
         return startpoint;
     }
