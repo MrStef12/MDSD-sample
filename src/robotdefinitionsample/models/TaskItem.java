@@ -57,6 +57,7 @@ class TaskItem {
                 break;
             case up:
                 robot.getPos().setY(robot.getPos().getY() -1);
+                break;
             case down:
                 robot.getPos().setY(robot.getPos().getY() + 1);
                 break;
