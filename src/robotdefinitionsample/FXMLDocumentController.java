@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.models.Mission;
+import robotdefinitionsample.models.MissionGenerator;
 import robotdefinitionsample.models.Obstacle;
 import robotdefinitionsample.models.Robot;
 import robotdefinitionsample.models.Shelf;
@@ -40,10 +41,14 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         robots = new ArrayList<>();
         obstacles = new ArrayList<>();
+        shelfs = new ArrayList<>();
         
         Shelf s1 = new Shelf("navn", new Vector2(4,5));
-        Robot r = new Robot("name", new Vector2(4,5), new Mission());
         
+
+        Robot r = new Robot("name", new Vector2(0,0));
+        r.setMission(MissionGenerator.Robot1(r));
+
         robots.add(r);
         
         grid.add(r, r.getPos().getX(), r.getPos().getY());
@@ -55,11 +60,7 @@ public class FXMLDocumentController implements Initializable {
         
         //Try to drag the text robot in the grid to trigger
         //this event
-        
-        Robot l = robots.get(0);
-        
-        grid.getChildren().remove(l);
-        grid.add(l, 9, 9);
+        tick();
     }
     
     private void tick() {

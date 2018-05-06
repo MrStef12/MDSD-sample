@@ -15,10 +15,13 @@ public class Robot extends Label {
     private Vector2 pos;
     private Mission mission;
 
-    public Robot(String name, Vector2 startpoint, Mission mission) {
+    public Robot(String name, Vector2 startpoint) {
         super(name);
         this.pos = startpoint;
-        this.mission = mission;
+    }
+    
+    public void setMission(Mission m) {
+        this.mission = m;
     }
 
     public String getName() {
@@ -35,6 +38,6 @@ public class Robot extends Label {
     
     public void execute() {
         Task t = mission.getNextTask();
-        
+        t.executeTaskItem();
     }
 }

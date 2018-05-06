@@ -15,13 +15,34 @@ import java.util.List;
 public class Task {
     private String name;
     private List<TaskItem> items;
+    private int currentTask;
+    private boolean done;
     
     public Task(String name) {
         this.name = name;
         items = new ArrayList<>();
+        currentTask = 0;
+        done = false;
     }
     
     public void addTask(TaskItem item) {
         items.add(item);
+    }
+    
+    public boolean done() {
+        return done;
+    }
+    
+    public void executeTaskItem() {
+        TaskItem currentTaskItem = items.get(currentTask);
+        
+        currentTaskItem.executeCommand();
+        if (currentTaskItem.done()) {
+            currentTask++;
+        }
+        
+        if (currentTask == items.size()) {
+            done = true;
+        }
     }
 }

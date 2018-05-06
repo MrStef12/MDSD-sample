@@ -19,10 +19,12 @@ class TaskItem {
     
     private Robot robot;
     private ActionCondition ac;
+    private boolean done;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
         this.ac = ac;
+        this.done = false;
     }
     
     public ActionCondition getAction() {
@@ -33,7 +35,7 @@ class TaskItem {
         //Maybe some general code can be done here.
         
         switch (ac) {
-            case PICKUP:
+            case FORWARD:
                 forward();
                 break;
             case TURN:
@@ -41,7 +43,12 @@ class TaskItem {
                 break;
         }
         
+        done = true;
         
+    }
+    
+    public boolean done() {
+        return done;
     }
     
     private void forward() {

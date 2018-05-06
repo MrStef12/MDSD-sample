@@ -5,6 +5,7 @@
  */
 package robotdefinitionsample.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public class Mission {
     private int currentTask;
     
     public Mission() {
+        mission = new ArrayList<>();
         currentTask = 0;
     }
     
@@ -25,7 +27,9 @@ public class Mission {
     
     public Task getNextTask() {
         Task t = mission.get(currentTask);
-        currentTask++;
+        if (t.done()) {
+            currentTask++;
+        }
         return t;
     }
     
