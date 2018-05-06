@@ -10,14 +10,16 @@ package robotdefinitionsample.models;
  * @author ditlev
  */
 public enum ActionCondition {
-    Pickup,
-    Forwarduntil,
-    Forward,
-    Backward,
-    Turn,
-    Retry,
-    Do,
-    Terminate,
-    Condition
+    PICKUP,
+    FORWARDUNTIL,
+    FORWARD,
+    BACKWARD,
+    TURN,
+    RETRY,
+    DO,
+    TERMINATE,
+    CONDITION
     
 }
+
+
