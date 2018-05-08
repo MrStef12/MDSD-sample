@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.models.Mission;
@@ -49,8 +51,9 @@ public class FXMLDocumentController implements Initializable {
         
         Shelf s1 = new Shelf("navn", new Vector2(4,5));
         
-
-        Robot r = new Robot("name", new Vector2(0,0));
+        Image image = new Image(getClass().getResourceAsStream("robot.png"));
+        Robot r = new Robot("", new Vector2(0,0));
+        r.setGraphic(new ImageView(image));
         r.setMission(generator.Robot1(r));
 
         robots.add(r);
