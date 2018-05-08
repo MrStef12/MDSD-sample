@@ -47,15 +47,19 @@ public class FXMLDocumentController implements Initializable {
         shelfs = new ArrayList<>();
         MissionGenerator generator = new MissionGenerator();
         
-        Shelf s1 = new Shelf("navn", new Vector2(4,5));
+        Shelf s1 = new Shelf("Shelf1", new Vector2(2,0));
+        Obstacle o1 = new Obstacle("Pole", new Vector2(3, 1), new Vector2(1,1));
         
-
         Robot r = new Robot("name", new Vector2(0,0));
         r.setMission(generator.Robot1(r));
 
         robots.add(r);
+        obstacles.add(o1);
+        shelfs.add(s1);
         
         grid.add(r, r.getPos().getX(), r.getPos().getY());
+        grid.add(o1, o1.getPos().getX(), o1.getPos().getY());
+        grid.add(s1, s1.getPos().getX(), s1.getPos().getY());
         
     }
 
