@@ -23,13 +23,13 @@ class TaskItem {
     private Robot robot;
     private ActionCondition ac;
     private boolean done;
-    private int speed;
+    private int ticksToGo;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
         this.ac = ac;
         this.done = false;
-        this.speed = 1;
+        this.ticksToGo = 1;
     }
     
     public ActionCondition getAction() {
@@ -66,23 +66,23 @@ class TaskItem {
 	        switch (currentDirection) {
 	            case right:
 	                props.setPos(robot.getPos().add(1, 0));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case left:
 	                props.setPos(robot.getPos().add(-1, 0));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case up:
 	                props.setPos(robot.getPos().add(0, -1));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case down:
 	                props.setPos(robot.getPos().add(0, 1));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	        }
 
-	        if (speed == 0) {
+	        if (ticksToGo == 0) {
                 done = true;
             }
     }
@@ -90,28 +90,28 @@ class TaskItem {
     private void backward(DesiredProps props) {
     	int currentDirection = (int) robot.rotateProperty().get();
         
-    	while(speed > 0) {
+    	while(ticksToGo > 0) {
 	    	switch (currentDirection) {
 	        case right:
-	            props.setPos(robot.getPos().add(-speed, 0));
-	            speed--;
+	            props.setPos(robot.getPos().add(-ticksToGo, 0));
+	            ticksToGo--;
 	            break;
 	        case left:
-	            props.setPos(robot.getPos().add(speed, 0));
-	            speed--;
+	            props.setPos(robot.getPos().add(ticksToGo, 0));
+	            ticksToGo--;
 	            break;
 	        case up:
-	            props.setPos(robot.getPos().add(0, speed));
-	            speed--;
+	            props.setPos(robot.getPos().add(0, ticksToGo));
+	            ticksToGo--;
 	            break;
 	        case down:
-	            props.setPos(robot.getPos().add(0, -speed));
-	            speed--;
+	            props.setPos(robot.getPos().add(0, -ticksToGo));
+	            ticksToGo--;
 	            break;
 	    	}
     	}
 
-        if (speed == 0) {
+        if (ticksToGo == 0) {
             done = true;
         }
     }
@@ -158,8 +158,12 @@ class TaskItem {
         done = true;
     }
     
-    public TaskItem setSpeed(int speed) {
-    	this.speed = speed;
+    public TaskItem setTicksToGo(int speed) {
+    	this.ticksToGo = speed;
     	return this;
+    }
+    
+    public void incrementTicksToGo() {
+        ticksToGo++;
     }
 }

@@ -38,6 +38,7 @@ public class Mission {
     
     public void executeNext(GridPane grid, DesiredProps props) {
         Task t = mission.get(currentTask);
+        
 	try {
             t.executeNext(props);
             if (ObstacleDetection.detect(grid, props)) {
@@ -50,6 +51,11 @@ public class Mission {
             alert.setHeaderText("Robot cannot execute task");
             alert.setContentText("The robot hit an invalid move");
             alert.showAndWait();
+            
+            if (t.getRetries() < 100) {
+                t.setRetry(true);
+            }
+            
         }
         if (t.isDone()) {
             currentTask++;
