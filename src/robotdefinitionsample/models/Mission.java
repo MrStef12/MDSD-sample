@@ -26,11 +26,16 @@ public class Mission {
     }
     
     public Task getNextTask() {
-        Task t = mission.get(currentTask);
-        if (t.done()) {
-            currentTask++;
+        try {
+            Task t = mission.get(currentTask);
+            if (t.done()) {
+                currentTask++;
+                t = mission.get(currentTask);
+            }
+            return t;
+        } catch (IndexOutOfBoundsException ex) {
+            return null;
         }
-        return t;
     }
     
 }

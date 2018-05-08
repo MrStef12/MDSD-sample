@@ -5,6 +5,7 @@
  */
 package robotdefinitionsample.models;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
 /**
@@ -38,6 +39,14 @@ public class Robot extends Label {
     
     public void execute() {
         Task t = mission.getNextTask();
-        t.executeTaskItem();
+        if(t != null) {
+            t.executeTaskItem();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No more tasks");
+            alert.setHeaderText("No more tasks");
+            alert.setContentText("The robot \"" + getName() + "\" has no more tasks in its mission to execute.");
+            alert.showAndWait();
+        }
     }
 }
