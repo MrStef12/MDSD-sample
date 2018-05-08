@@ -20,7 +20,6 @@ public enum ActionCondition {
     DO,
     TERMINATE,
     CONDITION
-    
 }
 
 

@@ -22,11 +22,13 @@ class TaskItem {
     private Robot robot;
     private ActionCondition ac;
     private boolean done;
+    private int speed;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
         this.ac = ac;
         this.done = false;
+        this.speed = 1;
     }
     
     public ActionCondition getAction() {
@@ -50,9 +52,6 @@ class TaskItem {
                 backward(props);
                 break;
         }
-        
-        done = true;
-        
     }
     
     public boolean isDone() {
@@ -62,20 +61,57 @@ class TaskItem {
     private void forward(DesiredProps props) {
        
         int currentDirection = (int) robot.rotateProperty().get();
+
+	        switch (currentDirection) {
+	            case right:
+	                props.setPos(robot.getPos().add(1, 0));
+	                speed--;
+	                break;
+	            case left:
+	                props.setPos(robot.getPos().add(-1, 0));
+	                speed--;
+	                break;
+	            case up:
+	                props.setPos(robot.getPos().add(0, -1));
+	                speed--;
+	                break;
+	            case down:
+	                props.setPos(robot.getPos().add(0, 1));
+	                speed--;
+	                break;
+	        }
+
+	        if (speed == 0) {
+                done = true;
+            }
+    }
+    
+    private void backward(DesiredProps props) {
+    	int currentDirection = (int) robot.rotateProperty().get();
         
-        switch (currentDirection) {
-            case right:
-                props.setPos(robot.getPos().add(1, 0));
-                break;
-            case left:
-                props.setPos(robot.getPos().add(-1, 0));
-                break;
-            case up:
-                props.setPos(robot.getPos().add(0, -1));
-                break;
-            case down:
-                props.setPos(robot.getPos().add(0, 1));
-                break;
+    	while(speed > 0) {
+	    	switch (currentDirection) {
+	        case right:
+	            props.setPos(robot.getPos().add(-speed, 0));
+	            speed--;
+	            break;
+	        case left:
+	            props.setPos(robot.getPos().add(speed, 0));
+	            speed--;
+	            break;
+	        case up:
+	            props.setPos(robot.getPos().add(0, speed));
+	            speed--;
+	            break;
+	        case down:
+	            props.setPos(robot.getPos().add(0, -speed));
+	            speed--;
+	            break;
+	    	}
+    	}
+
+        if (speed == 0) {
+            done = true;
         }
     }
     
@@ -96,6 +132,8 @@ class TaskItem {
             props.setRotation(left);
             break;
         }  
+        
+        done = true;
     }
     
     private void turnCCW(DesiredProps props) {
@@ -114,26 +152,13 @@ class TaskItem {
         case down:
         	props.setRotation(right);
             break;
-        }  
+        }
+        
+        done = true;
     }
     
-    private void backward(DesiredProps props) {
-    	int currentDirection = (int) robot.rotateProperty().get();
-        
-    	switch (currentDirection) {
-        case right:
-            props.setPos(robot.getPos().add(-1, 0));
-            break;
-        case left:
-            props.setPos(robot.getPos().add(1, 0));
-            break;
-        case up:
-            props.setPos(robot.getPos().add(0, 1));
-            break;
-        case down:
-            props.setPos(robot.getPos().add(0, -1));
-            break;
-    }
-        
+    public TaskItem setSpeed(int speed) {
+    	this.speed = speed;
+    	return this;
     }
 }
