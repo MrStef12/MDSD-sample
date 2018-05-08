@@ -13,9 +13,9 @@ class TaskItem {
     
     //Direction values
     private final int right = 0;
-    private final int up = 90;
+    private final int up = 270;
     private final int left = 180;
-    private final int down = 270;
+    private final int down = 90;
     
     private Robot robot;
     private ActionCondition ac;
@@ -74,7 +74,20 @@ class TaskItem {
     private void turn() {
         int currentDirection = (int) robot.rotateProperty().get();
         
-        
+        switch (currentDirection) {
+        case right:
+            robot.setRotate(down);
+            break;
+        case left:
+            robot.setRotate(up);
+            break;
+        case up:
+            robot.setRotate(right);
+            break;
+        case down:
+            robot.setRotate(left);
+            break;
+    }
         
     }
     
