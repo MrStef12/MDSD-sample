@@ -17,10 +17,12 @@ import robotdefinitionsample.DesiredProps;
 public class Robot extends Label {
     private Vector2 pos;
     private Mission mission;
+    private String name;
 
     public Robot(String name, Vector2 startpoint) {
-        super(name);
+        super();
         this.pos = startpoint;
+        this.name = name;
     }
     
     public void setMission(Mission m) {
@@ -28,7 +30,7 @@ public class Robot extends Label {
     }
 
     public String getName() {
-        return this.getText();
+        return name;
     }
     
     public Vector2 getPos() {
@@ -50,7 +52,14 @@ public class Robot extends Label {
             alert.setHeaderText("No more tasks");
             alert.setContentText("The robot \"" + getName() + "\" has no more tasks in its mission to execute.");
             alert.showAndWait();
-        } else {
+        } else if (mission.getFailed()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Failed");
+            alert.setHeaderText("The mission failed");
+            alert.setContentText("The robot \"" + getName() + "\" execution failed");
+            alert.showAndWait();
+        }
+        else {
             DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
             mission.executeNext(grid, props);
             if (!props.isDiscarded()) {

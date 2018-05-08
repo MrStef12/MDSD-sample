@@ -21,11 +21,13 @@ public class Mission {
     private List<Task> mission;
     private int currentTask;
     private boolean done;
+    private boolean failed;
     
     public Mission() {
         mission = new ArrayList<>();
         currentTask = 0;
         done = false;
+        failed = false;
     }
 
     public boolean isDone() {
@@ -52,8 +54,10 @@ public class Mission {
             alert.setContentText("The robot hit an invalid move");
             alert.showAndWait();
             
-            if (t.getRetries() < 100) {
+            if (t.getRetries() < 3) {
                 t.setRetry(true);
+            } else {
+                missionFailed();
             }
             
         }
@@ -63,5 +67,13 @@ public class Mission {
         if (currentTask == mission.size()) {
             done = true;
         }
+    }
+
+    private void missionFailed() {
+        failed = true;
+    }
+    
+    public boolean getFailed() {
+        return failed;
     }
 }

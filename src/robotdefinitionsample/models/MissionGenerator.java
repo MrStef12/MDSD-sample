@@ -19,7 +19,7 @@ public class MissionGenerator {
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
         t.addTask(new TaskItem(r, ActionCondition.TURN_CW));
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(4));
+        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
         t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
         t.addTask(new TaskItem(r, ActionCondition.BACKWARD));
         m.addTask(t);
