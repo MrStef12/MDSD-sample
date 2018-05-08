@@ -7,8 +7,10 @@ package robotdefinitionsample.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.exceptions.InvalidMove;
 import robotdefinitionsample.ObstacleDetection;
 
 /**
@@ -36,9 +38,18 @@ public class Mission {
     
     public void executeNext(GridPane grid, DesiredProps props) {
         Task t = mission.get(currentTask);
-        t.executeNext(props);
-        if (ObstacleDetection.detect(grid, props)) {
-            props.setDiscarded(true);
+	try {
+            t.executeNext(props);
+            if (ObstacleDetection.detect(grid, props)) {
+                props.setDiscarded(true);
+                throw new InvalidMove();
+            }
+	} catch(InvalidMove e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid mode");
+            alert.setHeaderText("Robot cannot execute task");
+            alert.setContentText("The robot hit an invalid move");
+            alert.showAndWait();
         }
         if (t.isDone()) {
             currentTask++;

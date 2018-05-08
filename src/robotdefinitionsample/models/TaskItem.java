@@ -6,6 +6,7 @@
 package robotdefinitionsample.models;
 
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.exceptions.WeightTooHigh;
 
 /**
  *
