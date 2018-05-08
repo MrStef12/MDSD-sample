@@ -42,12 +42,13 @@ public class FXMLDocumentController implements Initializable {
         robots = new ArrayList<>();
         obstacles = new ArrayList<>();
         shelfs = new ArrayList<>();
+        MissionGenerator generator = new MissionGenerator();
         
         Shelf s1 = new Shelf("navn", new Vector2(4,5));
         
 
         Robot r = new Robot("name", new Vector2(0,0));
-        r.setMission(MissionGenerator.Robot1(r));
+        r.setMission(generator.Robot1(r));
 
         robots.add(r);
         
