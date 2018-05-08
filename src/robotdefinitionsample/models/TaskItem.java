@@ -41,8 +41,14 @@ class TaskItem {
             case FORWARD:
                 forward(props);
                 break;
-            case TURN:
-                turn(props);
+            case TURN_CW:
+                turnCW(props);
+                break;
+            case TURN_CCW:
+                turnCCW(props);
+                break;
+            case BACKWARD:
+                backward(props);
                 break;
         }
         
@@ -74,7 +80,7 @@ class TaskItem {
         }
     }
     
-    private void turn(DesiredProps props) {
+    private void turnCW(DesiredProps props) {
         int currentDirection = (int) robot.rotateProperty().get();
         
         switch (currentDirection) {
@@ -90,11 +96,45 @@ class TaskItem {
         case down:
             props.setRotation(left);
             break;
-    }
-        
+        }  
     }
     
-    private void backward() {
+    private void turnCCW(DesiredProps props) {
+        int currentDirection = (int) robot.rotateProperty().get();
+        
+        switch (currentDirection) {
+        case right:
+            props.setRotation(up);
+            break;
+        case left:
+        	props.setRotation(down);
+            break;
+        case up:
+        	props.setRotation(left);
+            break;
+        case down:
+        	props.setRotation(right);
+            break;
+        }  
+    }
+    
+    private void backward(DesiredProps props) {
+    	int currentDirection = (int) robot.rotateProperty().get();
+        
+    	switch (currentDirection) {
+        case right:
+            props.setPos(robot.getPos().add(-1, 0));
+            break;
+        case left:
+            props.setPos(robot.getPos().add(1, 0));
+            break;
+        case up:
+            props.setPos(robot.getPos().add(0, 1));
+            break;
+        case down:
+            props.setPos(robot.getPos().add(0, -1));
+            break;
+    }
         
     }
 }
