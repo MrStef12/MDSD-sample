@@ -7,6 +7,8 @@ package robotdefinitionsample.models;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import robotdefinitionsample.DesiredProps;
 
 /**
  *
@@ -37,7 +39,11 @@ public class Robot extends Label {
         return mission;
     }
     
-    public void execute() {
+    public void setPos(Vector2 pos) {
+        this.pos = pos;
+    }
+    
+    public void execute(GridPane grid) {
         if (mission.isDone()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No more tasks");
@@ -45,7 +51,10 @@ public class Robot extends Label {
             alert.setContentText("The robot \"" + getName() + "\" has no more tasks in its mission to execute.");
             alert.showAndWait();
         } else {
-            mission.executeNext();
+            DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
+            mission.executeNext(props);
+            setPos(props.getPos());
+            setRotate(props.getRotation());
         }
     }
 }

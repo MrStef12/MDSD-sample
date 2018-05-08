@@ -33,4 +33,12 @@ public class Vector2 {
     public void setX(int x) {
         this.x = x;
     }
+    
+    public Vector2 add(int x, int y) {
+        return new Vector2(this.x + x, this.y + y);
+    }
+    
+    public Vector2 add(Vector2 pos) {
+        return new Vector2(this.x + pos.getX(), this.y + pos.getY());
+    }
 }

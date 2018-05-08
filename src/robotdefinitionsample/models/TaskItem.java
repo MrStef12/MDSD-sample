@@ -5,6 +5,8 @@
  */
 package robotdefinitionsample.models;
 
+import robotdefinitionsample.DesiredProps;
+
 /**
  *
  * @author ditlev
@@ -31,15 +33,15 @@ class TaskItem {
         return ac;
     }
     
-    public void executeCommand() {
+    public void executeCommand(DesiredProps props) {
         //Maybe some general code can be done here.
         
         switch (ac) {
             case FORWARD:
-                forward();
+                forward(props);
                 break;
             case TURN:
-                turn();
+                turn(props);
                 break;
         }
         
@@ -51,41 +53,41 @@ class TaskItem {
         return done;
     }
     
-    private void forward() {
+    private void forward(DesiredProps props) {
        
         int currentDirection = (int) robot.rotateProperty().get();
         
         switch (currentDirection) {
             case right:
-                robot.getPos().setX(robot.getPos().getX() + 1);
+                props.setPos(robot.getPos().add(1, 0));
                 break;
             case left:
-                robot.getPos().setX(robot.getPos().getX() - 1);
+                props.setPos(robot.getPos().add(-1, 0));
                 break;
             case up:
-                robot.getPos().setY(robot.getPos().getY() -1);
+                props.setPos(robot.getPos().add(0, -1));
                 break;
             case down:
-                robot.getPos().setY(robot.getPos().getY() + 1);
+                props.setPos(robot.getPos().add(0, 1));
                 break;
         }
     }
     
-    private void turn() {
+    private void turn(DesiredProps props) {
         int currentDirection = (int) robot.rotateProperty().get();
         
         switch (currentDirection) {
         case right:
-            robot.setRotate(down);
+            props.setRotation(down);
             break;
         case left:
-            robot.setRotate(up);
+            props.setRotation(up);
             break;
         case up:
-            robot.setRotate(right);
+            props.setRotation(right);
             break;
         case down:
-            robot.setRotate(left);
+            props.setRotation(left);
             break;
     }
         
