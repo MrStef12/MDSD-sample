@@ -8,6 +8,7 @@ package robotdefinitionsample.models;
 import java.util.ArrayList;
 import java.util.List;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.exceptions.InvalidMove;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Task {
         return done;
     }
     
-    public void executeNext(DesiredProps props) {
+    public void executeNext(DesiredProps props) throws InvalidMove {
         TaskItem currentTaskItem = items.get(currentTask);
         
         currentTaskItem.executeCommand(props);

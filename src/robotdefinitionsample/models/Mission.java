@@ -7,7 +7,9 @@ package robotdefinitionsample.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.exceptions.InvalidMove;
 
 /**
  *
@@ -34,7 +36,17 @@ public class Mission {
     
     public void executeNext(DesiredProps props) {
         Task t = mission.get(currentTask);
-        t.executeNext(props);
+        try {
+            t.executeNext(props);
+        } catch(InvalidMove e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No more tasks");
+            alert.setHeaderText("No more tasks");
+            alert.setContentText("The robot hit an invalid move");
+            alert.showAndWait();
+        }
+        
+        
         if (t.isDone()) {
             currentTask++;
         }
