@@ -19,10 +19,14 @@ public class MissionGenerator {
         TaskItem ti = new TaskItem(r, ActionCondition.FORWARD);
         TaskItem ti1 = new TaskItem(r, ActionCondition.FORWARD);
         TaskItem ti2 = new TaskItem(r, ActionCondition.FORWARD);
+        TaskItem ti3 = new TaskItem(r, ActionCondition.TURN);
+        TaskItem ti4 = new TaskItem(r, ActionCondition.FORWARD);
         
         t.addTask(ti);
         t.addTask(ti1);
         t.addTask(ti2);
+        t.addTask(ti3);
+        t.addTask(ti4);
         m.addTask(t);
         return m;
     }
