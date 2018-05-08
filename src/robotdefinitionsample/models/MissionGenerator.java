@@ -12,7 +12,7 @@ package robotdefinitionsample.models;
 public class MissionGenerator {
     
     
-    public static Mission Robot1(Robot r) {
+    public Mission Robot1(Robot r) {
         Mission m = new Mission();
         Task t = new Task("asd");
         

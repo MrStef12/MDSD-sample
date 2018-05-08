@@ -9,8 +9,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -30,11 +32,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private GridPane grid;
     @FXML
-    private Label Robot;
+    private Button Tick;
     
     private List<Robot> robots;
     private List<Obstacle> obstacles;
     private List<Shelf> shelfs;
+
 
     
     @Override
@@ -56,13 +59,6 @@ public class FXMLDocumentController implements Initializable {
         
     }
 
-    @FXML
-    private void doStuff(MouseEvent event) {
-        
-        //Try to drag the text robot in the grid to trigger
-        //this event
-        tick();
-    }
     
     private void tick() {
         for (Robot r : robots) {
@@ -70,6 +66,11 @@ public class FXMLDocumentController implements Initializable {
             grid.getChildren().remove(r);
             grid.add(r, r.getPos().getX(), r.getPos().getY());
         }
+    }
+
+    @FXML
+    private void onClick(ActionEvent event) {
+        tick();
     }
     
 }
