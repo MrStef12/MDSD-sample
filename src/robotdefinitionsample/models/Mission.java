@@ -15,27 +15,30 @@ import java.util.List;
 public class Mission {
     private List<Task> mission;
     private int currentTask;
+    private boolean done;
     
     public Mission() {
         mission = new ArrayList<>();
         currentTask = 0;
+        done = false;
+    }
+
+    public boolean isDone() {
+        return done;
     }
     
     public void addTask(Task t) {
         mission.add(t);
     }
     
-    public Task getNextTask() {
-        try {
-            Task t = mission.get(currentTask);
-            if (t.done()) {
-                currentTask++;
-                t = mission.get(currentTask);
-            }
-            return t;
-        } catch (IndexOutOfBoundsException ex) {
-            return null;
+    public void executeNext() {
+        Task t = mission.get(currentTask);
+        t.executeNext();
+        if (t.isDone()) {
+            currentTask++;
+        }
+        if (currentTask == mission.size()) {
+            done = true;
         }
     }
-    
 }

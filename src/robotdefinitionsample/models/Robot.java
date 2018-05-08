@@ -38,15 +38,14 @@ public class Robot extends Label {
     }
     
     public void execute() {
-        Task t = mission.getNextTask();
-        if(t != null) {
-            t.executeTaskItem();
-        } else {
+        if (mission.isDone()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No more tasks");
             alert.setHeaderText("No more tasks");
             alert.setContentText("The robot \"" + getName() + "\" has no more tasks in its mission to execute.");
             alert.showAndWait();
+        } else {
+            mission.executeNext();
         }
     }
 }

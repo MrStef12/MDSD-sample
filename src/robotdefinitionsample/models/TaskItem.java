@@ -47,7 +47,7 @@ class TaskItem {
         
     }
     
-    public boolean done() {
+    public boolean isDone() {
         return done;
     }
     

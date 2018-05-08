@@ -29,15 +29,15 @@ public class Task {
         items.add(item);
     }
     
-    public boolean done() {
+    public boolean isDone() {
         return done;
     }
     
-    public void executeTaskItem() {
+    public void executeNext() {
         TaskItem currentTaskItem = items.get(currentTask);
         
         currentTaskItem.executeCommand();
-        if (currentTaskItem.done()) {
+        if (currentTaskItem.isDone()) {
             currentTask++;
         }
         
