@@ -15,10 +15,12 @@ public class DesiredProps {
     
     private Vector2 pos;
     private int rotation;
+    private boolean discarded;
 
     public DesiredProps(Vector2 pos, int rotation) {
         this.pos = pos;
         this.rotation = rotation;
+        this.discarded = false;
     }
 
     public Vector2 getPos() {
@@ -27,6 +29,10 @@ public class DesiredProps {
 
     public int getRotation() {
         return rotation;
+    }
+
+    public boolean isDiscarded() {
+        return discarded;
     }
 
     public void setPos(int x, int y) {
@@ -39,6 +45,10 @@ public class DesiredProps {
 
     public void setRotation(int rotation) {
         this.rotation = rotation;
+    }
+
+    public void setDiscarded(boolean discarded) {
+        this.discarded = discarded;
     }
     
 }

@@ -52,9 +52,11 @@ public class Robot extends Label {
             alert.showAndWait();
         } else {
             DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
-            mission.executeNext(props);
-            setPos(props.getPos());
-            setRotate(props.getRotation());
+            mission.executeNext(grid, props);
+            if (!props.isDiscarded()) {
+                setPos(props.getPos());
+                setRotate(props.getRotation());
+            }
         }
     }
 }
