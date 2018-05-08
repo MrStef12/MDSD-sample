@@ -50,7 +50,7 @@ public class FXMLDocumentController implements Initializable {
         MissionGenerator generator = new MissionGenerator();
         
         Shelf s1 = new Shelf("Shelf1", new Vector2(2,0));
-        Obstacle o1 = new Obstacle("Pole", new Vector2(3, 1), new Vector2(1,1));
+        Obstacle o1 = new Obstacle("Pole", new Vector2(1, 1), new Vector2(1,1));
         
         Image image = new Image(getClass().getResourceAsStream("robot.png"));
         Robot r = new Robot("", new Vector2(0,0));

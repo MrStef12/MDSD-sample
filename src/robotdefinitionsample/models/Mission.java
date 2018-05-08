@@ -7,7 +7,9 @@ package robotdefinitionsample.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.ObstacleDetection;
 
 /**
  *
@@ -32,9 +34,12 @@ public class Mission {
         mission.add(t);
     }
     
-    public void executeNext(DesiredProps props) {
+    public void executeNext(GridPane grid, DesiredProps props) {
         Task t = mission.get(currentTask);
         t.executeNext(props);
+        if (ObstacleDetection.detect(grid, props)) {
+            props.setDiscarded(true);
+        }
         if (t.isDone()) {
             currentTask++;
         }
