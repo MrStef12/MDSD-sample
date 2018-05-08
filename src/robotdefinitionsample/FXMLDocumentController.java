@@ -70,7 +70,7 @@ public class FXMLDocumentController implements Initializable {
     
     private void tick() {
         for (Robot r : robots) {
-            r.execute();
+            r.execute(grid);
             grid.getChildren().remove(r);
             grid.add(r, r.getPos().getX(), r.getPos().getY());
         }

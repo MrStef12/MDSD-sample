@@ -7,6 +7,7 @@ package robotdefinitionsample.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import robotdefinitionsample.DesiredProps;
 
 /**
  *
@@ -33,10 +34,10 @@ public class Task {
         return done;
     }
     
-    public void executeNext() {
+    public void executeNext(DesiredProps props) {
         TaskItem currentTaskItem = items.get(currentTask);
         
-        currentTaskItem.executeCommand();
+        currentTaskItem.executeCommand(props);
         if (currentTaskItem.isDone()) {
             currentTask++;
         }

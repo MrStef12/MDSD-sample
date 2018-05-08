@@ -7,6 +7,7 @@ package robotdefinitionsample.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import robotdefinitionsample.DesiredProps;
 
 /**
  *
@@ -31,9 +32,9 @@ public class Mission {
         mission.add(t);
     }
     
-    public void executeNext() {
+    public void executeNext(DesiredProps props) {
         Task t = mission.get(currentTask);
-        t.executeNext();
+        t.executeNext(props);
         if (t.isDone()) {
             currentTask++;
         }
