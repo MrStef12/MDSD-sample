@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.ObstacleDetection;
 
 /**
  *
@@ -17,6 +18,7 @@ import robotdefinitionsample.DesiredProps;
 public class Robot extends Label {
     private Vector2 pos;
     private Mission mission;
+    private Shelf pickedUpShelf;
 
     public Robot(String name, Vector2 startpoint) {
         super(name);
@@ -56,6 +58,9 @@ public class Robot extends Label {
             if (!props.isDiscarded()) {
                 setPos(props.getPos());
                 setRotate(props.getRotation());
+                if(props.isNeedPickup() && ObstacleDetection.getShelfAtPos(grid, props) != null) {
+
+                }
             }
         }
     }
