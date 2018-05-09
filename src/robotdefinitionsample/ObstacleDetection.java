@@ -44,4 +44,17 @@ public class ObstacleDetection<T> {
         }
         return null;
     }
+
+    public static void deleteShelf(GridPane grid, DesiredProps props) {
+        int x = props.getPos().getX();
+        int y = props.getPos().getY();
+        for(Node node : grid.getChildren()) {
+            if (node instanceof Shelf) {
+                Vector2 pos = ((Shelf) node).getPos();
+                if (pos.getX() == x && pos.getY() == y) {
+                    node.setVisible(false);
+                }
+            }
+        }
+    }
 }

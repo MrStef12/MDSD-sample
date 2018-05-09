@@ -18,12 +18,8 @@ import robotdefinitionsample.ObstacleDetection;
 public class Robot extends Label {
     private Vector2 pos;
     private Mission mission;
-<<<<<<< HEAD
-    private Shelf pickedUpShelf;
-=======
     private String name;
-    private Shelf shelf;
->>>>>>> 96bd255f29f39983b1e0c796e7c290310f7b0279
+    private Shelf pickedUpshelf;
 
     public Robot(String name, Vector2 startpoint) {
         super();
@@ -52,7 +48,7 @@ public class Robot extends Label {
     }
     
     public Shelf getShelf() {
-        return shelf;
+        return pickedUpshelf;
     }
     
     public void execute(GridPane grid) {
@@ -75,8 +71,9 @@ public class Robot extends Label {
             if (!props.isDiscarded()) {
                 setPos(props.getPos());
                 setRotate(props.getRotation());
-                if(props.isNeedPickup() && ObstacleDetection.getShelfAtPos(grid, props) != null) {
-
+                if(ObstacleDetection.getShelfAtPos(grid, props) != null && props.getShelfNameToPickUp().equals(ObstacleDetection.getShelfAtPos(grid, props).getName())) {
+                    this.pickedUpshelf = ObstacleDetection.getShelfAtPos(grid, props);
+                    ObstacleDetection.deleteShelf(grid, props);
                 }
             }
         }

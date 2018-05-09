@@ -27,6 +27,7 @@ class TaskItem {
     private int ticksToGo;
     private String propertyName;
     private String atShelfName;
+    private String shelfToPickUp;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
@@ -60,6 +61,9 @@ class TaskItem {
                 break;
             case CONDITIONAT:
                 conditionAt();
+                break;
+            case PICKUP:
+                pickUp(props);
                 break;
         }
     }
@@ -166,6 +170,11 @@ class TaskItem {
         
         done = true;
     }
+
+    private void pickUp(DesiredProps props) {
+        props.setShelfNameToPickUp(shelfToPickUp);
+        done = true;
+    }
     
     public TaskItem setTicksToGo(int speed) {
     	this.ticksToGo = speed;
@@ -183,6 +192,11 @@ class TaskItem {
     
     public TaskItem setAtShelfName(String shelfName) {
         this.atShelfName = shelfName;
+        return this;
+    }
+
+    public TaskItem setShelfToPickUp(String shelfToPickUp) {
+        this.shelfToPickUp = shelfToPickUp;
         return this;
     }
 

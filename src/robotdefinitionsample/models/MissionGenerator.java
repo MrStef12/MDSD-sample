@@ -20,6 +20,7 @@ public class MissionGenerator {
         
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
+        t.addTask(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
         t.addTask(new TaskItem(r, ActionCondition.TURN_CW));
         t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
         t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));

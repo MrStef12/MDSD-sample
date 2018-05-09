@@ -16,13 +16,13 @@ public class DesiredProps {
     private Vector2 pos;
     private int rotation;
     private boolean discarded;
-    private boolean needPickup;
+    private String shelfNameToPickUp;
 
     public DesiredProps(Vector2 pos, int rotation) {
         this.pos = pos;
         this.rotation = rotation;
         this.discarded = false;
-        this.needPickup = false;
+        this.shelfNameToPickUp = "";
     }
 
     public Vector2 getPos() {
@@ -37,8 +37,8 @@ public class DesiredProps {
         return discarded;
     }
 
-    public boolean isNeedPickup() {
-        return needPickup;
+    public String getShelfNameToPickUp() {
+        return shelfNameToPickUp;
     }
 
     public void setPos(int x, int y) {
@@ -57,8 +57,8 @@ public class DesiredProps {
         this.discarded = discarded;
     }
 
-    public void setNeedPickup(boolean needPickup) {
-        this.needPickup = needPickup;
+    public void setShelfNameToPickUp(String shelfNameToPickUp) {
+        this.shelfNameToPickUp = shelfNameToPickUp;
     }
     
 }
