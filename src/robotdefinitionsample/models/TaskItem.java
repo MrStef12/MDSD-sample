@@ -6,7 +6,8 @@
 package robotdefinitionsample.models;
 
 import robotdefinitionsample.DesiredProps;
-import robotdefinitionsample.exceptions.WeightTooHigh;
+import robotdefinitionsample.exceptions.NoShelfPickedUp;
+import robotdefinitionsample.exceptions.PropertyNotSet;
 
 /**
  *
@@ -23,20 +24,22 @@ class TaskItem {
     private Robot robot;
     private ActionCondition ac;
     private boolean done;
-    private int speed;
+    private int ticksToGo;
+    private String propertyName;
+    private String atShelfName;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
         this.ac = ac;
         this.done = false;
-        this.speed = 1;
+        this.ticksToGo = 1;
     }
     
     public ActionCondition getAction() {
         return ac;
     }
     
-    public void executeCommand(DesiredProps props) {
+    public void executeCommand(DesiredProps props) throws PropertyNotSet, NoShelfPickedUp, Exception {
         //Maybe some general code can be done here.
         
         switch (ac) {
@@ -52,6 +55,12 @@ class TaskItem {
             case BACKWARD:
                 backward(props);
                 break;
+            case CONDITIONPICKEDUP:
+                conditionPickedUp();
+                break;
+            case CONDITIONAT:
+                conditionAt();
+                break;
         }
     }
     
@@ -66,23 +75,23 @@ class TaskItem {
 	        switch (currentDirection) {
 	            case right:
 	                props.setPos(robot.getPos().add(1, 0));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case left:
 	                props.setPos(robot.getPos().add(-1, 0));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case up:
 	                props.setPos(robot.getPos().add(0, -1));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	            case down:
 	                props.setPos(robot.getPos().add(0, 1));
-	                speed--;
+	                ticksToGo--;
 	                break;
 	        }
 
-	        if (speed == 0) {
+	        if (ticksToGo == 0) {
                 done = true;
             }
     }
@@ -90,28 +99,28 @@ class TaskItem {
     private void backward(DesiredProps props) {
     	int currentDirection = (int) robot.rotateProperty().get();
         
-    	while(speed > 0) {
+    	while(ticksToGo > 0) {
 	    	switch (currentDirection) {
 	        case right:
-	            props.setPos(robot.getPos().add(-speed, 0));
-	            speed--;
+	            props.setPos(robot.getPos().add(-ticksToGo, 0));
+	            ticksToGo--;
 	            break;
 	        case left:
-	            props.setPos(robot.getPos().add(speed, 0));
-	            speed--;
+	            props.setPos(robot.getPos().add(ticksToGo, 0));
+	            ticksToGo--;
 	            break;
 	        case up:
-	            props.setPos(robot.getPos().add(0, speed));
-	            speed--;
+	            props.setPos(robot.getPos().add(0, ticksToGo));
+	            ticksToGo--;
 	            break;
 	        case down:
-	            props.setPos(robot.getPos().add(0, -speed));
-	            speed--;
+	            props.setPos(robot.getPos().add(0, -ticksToGo));
+	            ticksToGo--;
 	            break;
 	    	}
     	}
 
-        if (speed == 0) {
+        if (ticksToGo == 0) {
             done = true;
         }
     }
@@ -158,8 +167,75 @@ class TaskItem {
         done = true;
     }
     
-    public TaskItem setSpeed(int speed) {
-    	this.speed = speed;
+    public TaskItem setTicksToGo(int speed) {
+    	this.ticksToGo = speed;
     	return this;
+    }
+    
+    public TaskItem setProperty(String propertyName) {
+        this.propertyName = propertyName;
+        return this;
+    }
+    
+    public void incrementTicksToGo() {
+        ticksToGo++;
+    }
+    
+    public TaskItem setAtShelfName(String shelfName) {
+        this.atShelfName = shelfName;
+        return this;
+    }
+
+    private void conditionPickedUp() throws PropertyNotSet, NoShelfPickedUp, Exception {
+        
+        if (propertyName != null) {
+            if (robot.getShelf() != null) {
+                
+                /*
+                Example 1. do some condition add tasks depending on this
+                */
+                Property p = robot.getShelf().getProperty(propertyName);
+                
+                if (p.getDefault() < 9) {
+                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
+                } else {
+                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.BACKWARD));
+                }
+                
+                /*
+                Example 2. throw error
+                */
+                if (p.getDefault() < 9) {
+                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
+                } else {
+                    throw new Exception("custom exception");
+                }
+                
+                done = true;
+                
+            } else {
+                throw new NoShelfPickedUp();
+            }
+        } else {
+            throw new PropertyNotSet();
+        }
+        
+    }
+
+    private void conditionAt() throws Exception {
+        if (atShelfName != null) {
+            DesiredProps props = new DesiredProps(robot.getPos(), (int) robot.getRotate());
+            if (robot.getMission().collision(atShelfName, props)) {
+                // the first taskitem should be added last.
+                // As in the taskitems steps is reversed
+                robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
+                robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.TURN_CCW));
+                done = true;
+            } else {
+                //some new task
+            }
+        } else {
+            throw new Exception("Custom exception no shelf name set");
+        }
     }
 }

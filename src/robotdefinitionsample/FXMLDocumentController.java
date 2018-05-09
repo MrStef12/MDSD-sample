@@ -13,12 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import robotdefinitionsample.models.Mission;
 import robotdefinitionsample.models.MissionGenerator;
 import robotdefinitionsample.models.Obstacle;
 import robotdefinitionsample.models.Robot;
@@ -53,15 +50,21 @@ public class FXMLDocumentController implements Initializable {
         Obstacle o1 = new Obstacle("Pole", new Vector2(2, 2), new Vector2(1,1));
         
         Image image = new Image(getClass().getResourceAsStream("robot.png"));
-        Robot r = new Robot("", new Vector2(0,0));
+        Robot r = new Robot("Bjarne", new Vector2(0,0));
         r.setGraphic(new ImageView(image));
-        r.setMission(generator.Robot1(r));
+        r.setMission(generator.Robot1(r, grid));
+        
+        Robot r2 = new Robot("Robert", new Vector2(4, 0));
+        r2.setGraphic(new ImageView(image));
+        r2.setMission(generator.Robot2(r2, grid));
 
         robots.add(r);
+        robots.add(r2);
         obstacles.add(o1);
         shelfs.add(s1);
         
         grid.add(r, r.getPos().getX(), r.getPos().getY());
+        grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
         grid.add(o1, o1.getPos().getX(), o1.getPos().getY());
         grid.add(s1, s1.getPos().getX(), s1.getPos().getY());
         

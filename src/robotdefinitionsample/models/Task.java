@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.exceptions.InvalidMove;
+import robotdefinitionsample.exceptions.NoShelfPickedUp;
+import robotdefinitionsample.exceptions.PropertyNotSet;
 
 /**
  *
@@ -19,32 +21,66 @@ public class Task {
     private List<TaskItem> items;
     private int currentTask;
     private boolean done;
+    private int retries;
+    private boolean shouldRetry;
     
     public Task(String name) {
         this.name = name;
-        items = new ArrayList<>();
-        currentTask = 0;
-        done = false;
+        this.items = new ArrayList<>();
+        this.currentTask = 0;
+        this.done = false;
+        this.retries = 0;
+        this.shouldRetry = false;
     }
     
-    public void addTask(TaskItem item) {
+    //anonymously task comes generaly from a TaskItem
+    public Task() {
+        this.items = new ArrayList<>();
+        this.currentTask = 0;
+        this.done = false;
+        this.retries = 0;
+        this.shouldRetry = false;
+    }
+    
+    public Task addTask(TaskItem item) {
         items.add(item);
+        return this;
     }
     
     public boolean isDone() {
         return done;
     }
     
-    public void executeNext(DesiredProps props) throws InvalidMove {
+    public void executeNext(DesiredProps props) throws InvalidMove, PropertyNotSet, NoShelfPickedUp, Exception {
         TaskItem currentTaskItem = items.get(currentTask);
+        if (!shouldRetry) {
+            while(currentTaskItem.isDone()) {
+                currentTask++;
+                currentTaskItem = items.get(currentTask);
+            }    
+        } else {
+            retries++;
+            currentTaskItem.incrementTicksToGo();
+            shouldRetry = false;
+        }
         
         currentTaskItem.executeCommand(props);
-        if (currentTaskItem.isDone()) {
-            currentTask++;
-        }
         
         if (currentTask == items.size()) {
             done = true;
         }
+    }
+    
+    public void setRetry(boolean b) {
+        this.shouldRetry = b;
+    }
+    
+    public int getRetries() {
+        return retries;
+    }
+
+    void addTaskAtCurrent(TaskItem t) {
+        items.add(currentTask + 1, t);
+        System.out.println("Okay");
     }
 }

@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
  *
  * @author ditlev
  */
-public class Shelf extends Label{
+public class Shelf extends Label {
     private Vector2 pos;
     private Map<String, Property> properties;
 
@@ -23,6 +23,7 @@ public class Shelf extends Label{
         this.properties = new HashMap<>();
     }
 
+    
     public String getName() {
         return this.getText();
     }

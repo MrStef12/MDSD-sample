@@ -15,10 +15,12 @@ public enum ActionCondition {
     BACKWARD,
     TURN_CW,
     TURN_CCW,
-    RETRY,
     DO,
     TERMINATE,
-    CONDITION
+    CONDITIONAT,
+    CONDITIONPICKEDUP,
+    CONDITIONRETRIES
+    
 }
 
 
