@@ -12,6 +12,8 @@ import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.exceptions.InvalidMove;
 import robotdefinitionsample.ObstacleDetection;
+import robotdefinitionsample.exceptions.NoShelfPickedUp;
+import robotdefinitionsample.exceptions.PropertyNotSet;
 
 /**
  *
@@ -22,14 +24,16 @@ public class Mission {
     private int currentTask;
     private boolean done;
     private boolean failed;
+    private GridPane grid;
     
-    public Mission() {
+    public Mission(GridPane grid) {
         mission = new ArrayList<>();
         currentTask = 0;
         done = false;
         failed = false;
+        this.grid = grid;
     }
-
+    
     public boolean isDone() {
         return done;
     }
@@ -38,7 +42,11 @@ public class Mission {
         mission.add(t);
     }
     
-    public void executeNext(GridPane grid, DesiredProps props) {
+    public void addTaskAtCurrent(TaskItem t) {
+        mission.get(currentTask).addTaskAtCurrent(t);
+    }
+    
+    public void executeNext(DesiredProps props) {
         Task t = mission.get(currentTask);
         
 	try {
@@ -60,7 +68,22 @@ public class Mission {
                 missionFailed();
             }
             
+        } catch(NoShelfPickedUp e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No shelf");
+            alert.setHeaderText("Robot cannot execute task");
+            alert.setContentText("The robot did not have a shelf picked up");
+            alert.showAndWait();
+        } catch (PropertyNotSet e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid mode");
+            alert.setHeaderText("Robot cannot execute task");
+            alert.setContentText("The robot did not find the property");
+            alert.showAndWait();
+        } catch (Exception e) {
+            
         }
+        
         if (t.isDone()) {
             currentTask++;
         }
@@ -75,5 +98,17 @@ public class Mission {
     
     public boolean getFailed() {
         return failed;
+    }
+    
+    //Called from TaskItem conditionAt()
+    public boolean collision(String shelfName, DesiredProps props) {
+        Shelf s = ObstacleDetection.getShelfAtPos(grid, props);
+        if (s != null) {
+            if (s.getName().equals(shelfName)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

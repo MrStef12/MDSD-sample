@@ -18,6 +18,7 @@ public class Robot extends Label {
     private Vector2 pos;
     private Mission mission;
     private String name;
+    private Shelf shelf;
 
     public Robot(String name, Vector2 startpoint) {
         super();
@@ -45,6 +46,10 @@ public class Robot extends Label {
         this.pos = pos;
     }
     
+    public Shelf getShelf() {
+        return shelf;
+    }
+    
     public void execute(GridPane grid) {
         if (mission.isDone()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -61,7 +66,7 @@ public class Robot extends Label {
         }
         else {
             DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
-            mission.executeNext(grid, props);
+            mission.executeNext(props);
             if (!props.isDiscarded()) {
                 setPos(props.getPos());
                 setRotate(props.getRotation());

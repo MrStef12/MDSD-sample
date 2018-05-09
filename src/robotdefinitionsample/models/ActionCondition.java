@@ -11,15 +11,16 @@ package robotdefinitionsample.models;
  */
 public enum ActionCondition {
     PICKUP,
-    FORWARDUNTIL,
     FORWARD,
     BACKWARD,
     TURN_CW,
     TURN_CCW,
-    RETRY,
     DO,
     TERMINATE,
-    CONDITION
+    CONDITIONAT,
+    CONDITIONPICKEDUP,
+    CONDITIONRETRIES
+    
 }
 
 

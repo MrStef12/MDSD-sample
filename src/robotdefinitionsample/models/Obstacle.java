@@ -21,10 +21,6 @@ public class Obstacle extends Label {
         this.size = size;
     }
 
-    public String getName() {
-        return this.getText();
-    }
-
     public Vector2 getPos() {
         return pos;
     }
