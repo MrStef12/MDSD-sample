@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import robotdefinitionsample.interfaces.IMoveable;
 import robotdefinitionsample.models.MissionGenerator;
 import robotdefinitionsample.models.Obstacle;
 import robotdefinitionsample.models.Robot;
@@ -33,17 +34,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button Tick;
     
-    private List<Robot> robots;
-    private List<Obstacle> obstacles;
-    private List<Shelf> shelfs;
+    private List<IMoveable> movables;
 
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        robots = new ArrayList<>();
-        obstacles = new ArrayList<>();
-        shelfs = new ArrayList<>();
+        movables = new ArrayList<>();
         MissionGenerator generator = new MissionGenerator();
         
         Shelf s1 = new Shelf("Shelf1", new Vector2(2,0));
@@ -54,17 +51,17 @@ public class FXMLDocumentController implements Initializable {
         r.setGraphic(new ImageView(image));
         r.setMission(generator.Robot1(r, grid));
         
-//        Robot r2 = new Robot("Robert", new Vector2(4, 0));
-//        r2.setGraphic(new ImageView(image));
-//        r2.setMission(generator.Robot2(r2, grid));
+        Robot r2 = new Robot("Robert", new Vector2(4, 0));
+        r2.setGraphic(new ImageView(image));
+        r2.setMission(generator.Robot2(r2, grid));
 
-        robots.add(r);
-//        robots.add(r2);
-        obstacles.add(o1);
-        shelfs.add(s1);
+        movables.add(r);
+        movables.add(r2);
+        movables.add(s1);
+        movables.add(o1);
         
         grid.add(r, r.getPos().getX(), r.getPos().getY());
-//        grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
+        grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
         grid.add(o1, o1.getPos().getX(), o1.getPos().getY());
         grid.add(s1, s1.getPos().getX(), s1.getPos().getY());
         
@@ -72,10 +69,9 @@ public class FXMLDocumentController implements Initializable {
 
     
     private void tick() {
-        for (Robot r : robots) {
-            r.execute(grid);
-            grid.getChildren().remove(r);
-            grid.add(r, r.getPos().getX(), r.getPos().getY());
+        for (IMoveable m : movables) {
+            m.execute(grid);
+            m.move(grid);
         }
     }
 

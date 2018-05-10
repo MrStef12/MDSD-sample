@@ -6,12 +6,14 @@
 package robotdefinitionsample.models;
 
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import robotdefinitionsample.interfaces.IMoveable;
 
 /**
  *
  * @author ditlev
  */
-public class Obstacle extends Label {
+public class Obstacle extends Label implements IMoveable {
     private Vector2 pos;
     private Vector2 size;
 
@@ -28,5 +30,14 @@ public class Obstacle extends Label {
     public Vector2 getSize() {
         return size;
     }
-    
+
+    @Override
+    public void execute(GridPane grid) {
+
+    }
+
+    @Override
+    public void move(GridPane grid) {
+
+    }
 }

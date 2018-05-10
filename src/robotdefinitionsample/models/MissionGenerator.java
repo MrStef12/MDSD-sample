@@ -18,6 +18,7 @@ public class MissionGenerator {
     public Mission Robot1(Robot r, GridPane grid) {
         Mission m = new Mission(grid);
         Task t = new Task("asd");
+        
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
         t.addTask(new TaskItem(r, ActionCondition.FORWARD));
         t.addTask(new TaskItem(r, ActionCondition.CONDITIONAT)
@@ -27,13 +28,13 @@ public class MissionGenerator {
                         new TaskItem(r, ActionCondition.BACKWARD)
                 )
         );
-//        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-//        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-//        t.addTask(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
-//        t.addTask(new TaskItem(r, ActionCondition.TURN_CW));
-//        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
-//        t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
-//        t.addTask(new TaskItem(r, ActionCondition.BACKWARD));
+        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
+        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
+        t.addTask(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
+        t.addTask(new TaskItem(r, ActionCondition.TURN_CW));
+        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
+        t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
+        t.addTask(new TaskItem(r, ActionCondition.BACKWARD));
         m.addTask(t);
         return m;
     }
