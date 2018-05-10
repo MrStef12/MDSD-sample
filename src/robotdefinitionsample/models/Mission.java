@@ -46,8 +46,12 @@ public class Mission {
         mission.get(currentTask).addTaskAtCurrent(t);
     }
     
+    public Task getCurrentTask() {
+        return mission.get(currentTask);
+    }
+    
     public void executeNext(DesiredProps props) {
-        Task t = mission.get(currentTask);
+        Task t = getCurrentTask();
         
 	try {
             t.executeNext(props);
@@ -81,7 +85,7 @@ public class Mission {
             alert.setContentText("The robot did not find the property");
             alert.showAndWait();
         } catch (Exception e) {
-            
+            e.printStackTrace();
         }
         
         if (t.isDone()) {

@@ -5,6 +5,8 @@
  */
 package robotdefinitionsample.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.exceptions.NoShelfPickedUp;
 import robotdefinitionsample.exceptions.PropertyNotSet;
@@ -25,9 +27,11 @@ class TaskItem {
     private ActionCondition ac;
     private boolean done;
     private int ticksToGo;
-    private String propertyName;
     private String atShelfName;
     private String shelfToPickUp;
+    private ICondition conditionChecker;
+    private TaskItem[] ifTaskItems;
+    private TaskItem[] elseTaskItems;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
@@ -40,7 +44,7 @@ class TaskItem {
         return ac;
     }
     
-    public void executeCommand(DesiredProps props) throws PropertyNotSet, NoShelfPickedUp, Exception {
+    public void executeCommand(DesiredProps props) throws NoShelfPickedUp, Exception {
         //Maybe some general code can be done here.
         
         switch (ac) {
@@ -56,11 +60,11 @@ class TaskItem {
             case BACKWARD:
                 backward(props);
                 break;
-            case CONDITIONPICKEDUP:
-                conditionPickedUp();
+            case CONDITION:
+                condition(props);
                 break;
             case CONDITIONAT:
-                conditionAt();
+                conditionAt(props);
                 break;
             case PICKUP:
                 pickUp(props);
@@ -181,11 +185,6 @@ class TaskItem {
     	return this;
     }
     
-    public TaskItem setProperty(String propertyName) {
-        this.propertyName = propertyName;
-        return this;
-    }
-    
     public void incrementTicksToGo() {
         ticksToGo++;
     }
@@ -199,55 +198,53 @@ class TaskItem {
         this.shelfToPickUp = shelfToPickUp;
         return this;
     }
-
-    private void conditionPickedUp() throws PropertyNotSet, NoShelfPickedUp, Exception {
-        
-        if (propertyName != null) {
-            if (robot.getShelf() != null) {
-                
-                /*
-                Example 1. do some condition add tasks depending on this
-                */
-                Property p = robot.getShelf().getProperty(propertyName);
-                
-                if (p.getDefault() < 9) {
-                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
-                } else {
-                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.BACKWARD));
-                }
-                
-                /*
-                Example 2. throw error
-                */
-                if (p.getDefault() < 9) {
-                    robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
-                } else {
-                    throw new Exception("custom exception");
-                }
-                
-                done = true;
-                
-            } else {
-                throw new NoShelfPickedUp();
-            }
+    
+    private void condition(DesiredProps props) throws Exception {
+        Shelf s = robot.getShelf();
+        if (conditionChecker.checkCondition(robot.getMission().getCurrentTask().getRetries(), s, s != null ? s.getShelfProperties() : null)) {
+            conditionProcessTasks(ifTaskItems, props);
         } else {
-            throw new PropertyNotSet();
+            conditionProcessTasks(elseTaskItems, props);
         }
-        
+        done = true;
+    }
+    
+    private void conditionProcessTasks(TaskItem[] items, DesiredProps props) throws Exception {
+        for (int i=0; i<items.length; i++) {
+            TaskItem ti = items[i];
+            if (i == 0) {
+                ti.executeCommand(props);
+            } else {
+                robot.getMission().addTaskAtCurrent(ti);
+            }
+        }
+    }
+    
+    public TaskItem setConditionChecker(ICondition checker) {
+        conditionChecker = checker;
+        return this;
     }
 
-    private void conditionAt() throws Exception {
+    public TaskItem setIfTaskItems(TaskItem... ifTaskItems) {
+        this.ifTaskItems = ifTaskItems;
+        return this;
+    }
+
+    public TaskItem setElseTaskItems(TaskItem...elseTaskItems) {
+        this.elseTaskItems = elseTaskItems;
+        return this;
+    }
+
+    private void conditionAt(DesiredProps props) throws Exception {
         if (atShelfName != null) {
-            DesiredProps props = new DesiredProps(robot.getPos(), (int) robot.getRotate());
             if (robot.getMission().collision(atShelfName, props)) {
                 // the first taskitem should be added last.
                 // As in the taskitems steps is reversed
-                robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.FORWARD));
-                robot.getMission().addTaskAtCurrent(new TaskItem(robot, ActionCondition.TURN_CCW));
-                done = true;
+                conditionProcessTasks(ifTaskItems, props);
             } else {
-                //some new task
+                conditionProcessTasks(elseTaskItems, props);
             }
+            done = true;
         } else {
             throw new Exception("Custom exception no shelf name set");
         }

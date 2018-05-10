@@ -5,21 +5,12 @@
  */
 package robotdefinitionsample.models;
 
+import java.util.Map;
+
 /**
  *
- * @author ditlev
+ * @author stefh
  */
-public enum ActionCondition {
-    PICKUP,
-    FORWARD,
-    BACKWARD,
-    TURN_CW,
-    TURN_CCW,
-    DO,
-    TERMINATE,
-    CONDITION,
-    CONDITIONAT
-    
+public interface ICondition {
+    public boolean checkCondition(int retries, Shelf shelf, Map<String, Property> properties);
 }
-
-
