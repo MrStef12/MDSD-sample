@@ -10,12 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.ObstacleDetection;
+import robotdefinitionsample.interfaces.IMoveable;
 
 /**
  *
  * @author ditlev
  */
-public class Robot extends Label {
+public class Robot extends Label implements IMoveable {
     private Vector2 pos;
     private Mission mission;
     private String name;
@@ -50,7 +51,8 @@ public class Robot extends Label {
     public Shelf getShelf() {
         return pickedUpshelf;
     }
-    
+
+    @Override
     public void execute(GridPane grid) {
         if (mission.isDone()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -71,11 +73,23 @@ public class Robot extends Label {
             if (!props.isDiscarded()) {
                 setPos(props.getPos());
                 setRotate(props.getRotation());
-                if(ObstacleDetection.getShelfAtPos(grid, props) != null && props.getShelfNameToPickUp().equals(ObstacleDetection.getShelfAtPos(grid, props).getName())) {
-                    this.pickedUpshelf = ObstacleDetection.getShelfAtPos(grid, props);
-                    ObstacleDetection.deleteShelf(grid, props);
+                if(ObstacleDetection.getShelfAtPos(grid, props) != null) {
+                    if(ObstacleDetection.getShelfAtPos(grid, props).getName().equals(props.getShelfNameToPickUp())) {
+                        if(pickedUpshelf == null) {
+                            pickedUpshelf = ObstacleDetection.getShelfAtPos(grid, props);
+                        }
+                    }
+                }
+                if(pickedUpshelf != null){
+                    pickedUpshelf.setPos(props.getPos());
                 }
             }
         }
+    }
+
+    @Override
+    public void move(GridPane grid) {
+        grid.getChildren().remove(this);
+        grid.add(this, this.getPos().getX(), this.getPos().getY());
     }
 }
