@@ -51,7 +51,7 @@ public class Task {
         return done;
     }
     
-    public void executeNext(DesiredProps props) throws InvalidMove, PropertyNotSet, NoShelfPickedUp, Exception {
+    public void executeNext(DesiredProps props) throws InvalidMove, NoShelfPickedUp, Exception {
         TaskItem currentTaskItem = items.get(currentTask);
         if (!shouldRetry) {
             while(currentTaskItem.isDone()) {
@@ -81,6 +81,5 @@ public class Task {
 
     void addTaskAtCurrent(TaskItem t) {
         items.add(currentTask + 1, t);
-        System.out.println("Okay");
     }
 }
