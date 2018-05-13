@@ -5,6 +5,8 @@
  */
 package robotdefinitionsample.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.exceptions.InvalidMove;
 import robotdefinitionsample.exceptions.NoShelfPickedUp;
@@ -224,7 +226,7 @@ class TaskItem {
     }
 
     public TaskItem setIfTaskItems(IConditionTasks tasks) {
-        List<TaskItem> list = new ArrayList();
+        List<TaskItem> list = new ArrayList<>();
         tasks.addTasks(list);
         this.ifTaskItems = list;
         return this;

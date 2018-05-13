@@ -24,7 +24,7 @@ public class MissionGenerator {
         t.add(new TaskItem(r, ActionCondition.CONDITIONAT)
                 .setAtShelfName("Shelf1")
                 .setIfTaskItems((items) -> {
-                    items.add(new TaskItem(r, ActionCondition.DO))
+                    items.add(new TaskItem(r, ActionCondition.DO));
                 })
         );
         t.add(new TaskItem(r, ActionCondition.FORWARD));
@@ -53,10 +53,10 @@ public class MissionGenerator {
                         return 10 > 3;
                     }
                 })
-                .setIfTaskItems(
-                    new TaskItem(r, ActionCondition.TURN_CCW),
-                    new TaskItem(r, ActionCondition.TURN_CCW)
-                )
+                .setIfTaskItems((items) -> {
+                    items.add(new TaskItem(r, ActionCondition.TURN_CCW));
+                    items.add(new TaskItem(r, ActionCondition.TURN_CCW));
+                })
         );
         t.add(new TaskItem(r, ActionCondition.BACKWARD));
         
