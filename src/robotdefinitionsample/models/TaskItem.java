@@ -5,6 +5,8 @@
  */
 package robotdefinitionsample.models;
 
+import robotdefinitionsample.interfaces.ICondition;
+import robotdefinitionsample.interfaces.IConditionTasks;
 import java.util.ArrayList;
 import java.util.List;
 import robotdefinitionsample.DesiredProps;
@@ -15,7 +17,7 @@ import robotdefinitionsample.exceptions.NoShelfPickedUp;
  *
  * @author ditlev
  */
-class TaskItem {
+public class TaskItem {
     
     //Direction values
     private final int right = 0;

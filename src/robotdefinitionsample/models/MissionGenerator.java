@@ -5,6 +5,7 @@
  */
 package robotdefinitionsample.models;
 
+import robotdefinitionsample.interfaces.ICondition;
 import java.util.Map;
 import javafx.scene.layout.GridPane;
 
