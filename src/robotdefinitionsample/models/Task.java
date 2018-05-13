@@ -54,7 +54,7 @@ public class Task {
     public void executeNext(DesiredProps props) throws InvalidMove, NoShelfPickedUp, Exception {
         TaskItem currentTaskItem = items.get(currentTask);
         if (!shouldRetry) {
-            while(currentTaskItem.isDone()) {
+            while(currentTaskItem.isDone() && currentTask < items.size() - 1) {
                 currentTask++;
                 currentTaskItem = items.get(currentTask);
             }    
@@ -66,7 +66,7 @@ public class Task {
         
         currentTaskItem.executeCommand(props);
         
-        if (currentTask == items.size()) {
+        if (currentTask == items.size() - 1) {
             done = true;
         }
     }

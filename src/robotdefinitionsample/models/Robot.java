@@ -66,8 +66,7 @@ public class Robot extends Label implements IMoveable {
             alert.setHeaderText("The mission failed");
             alert.setContentText("The robot \"" + getName() + "\" execution failed");
             alert.showAndWait();
-        }
-        else {
+        } else {
             DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
             mission.executeNext(props);
             if (!props.isDiscarded()) {
