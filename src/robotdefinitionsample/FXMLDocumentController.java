@@ -51,17 +51,17 @@ public class FXMLDocumentController implements Initializable {
         r.setGraphic(new ImageView(image));
         r.setMission(generator.Robot1(r, grid));
         
-        Robot r2 = new Robot("Robert", new Vector2(4, 0));
-        r2.setGraphic(new ImageView(image));
-        r2.setMission(generator.Robot2(r2, grid));
+//        Robot r2 = new Robot("Robert", new Vector2(4, 0));
+//        r2.setGraphic(new ImageView(image));
+//        r2.setMission(generator.Robot2(r2, grid));
 
         movables.add(r);
-        movables.add(r2);
+//        movables.add(r2);
         movables.add(s1);
         movables.add(o1);
         
         grid.add(r, r.getPos().getX(), r.getPos().getY());
-        grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
+//        grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
         grid.add(o1, o1.getPos().getX(), o1.getPos().getY());
         grid.add(s1, s1.getPos().getX(), s1.getPos().getY());
         

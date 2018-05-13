@@ -10,7 +10,6 @@ import java.util.List;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.exceptions.InvalidMove;
 import robotdefinitionsample.exceptions.NoShelfPickedUp;
-import robotdefinitionsample.exceptions.PropertyNotSet;
 
 /**
  *

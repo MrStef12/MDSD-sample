@@ -25,7 +25,7 @@ public class MissionGenerator {
         t.add(new TaskItem(r, ActionCondition.CONDITIONAT)
                 .setAtShelfName("Shelf1")
                 .setIfTaskItems((items) -> {
-                    items.add(new TaskItem(r, ActionCondition.DO));
+                    items.add(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
                 })
         );
         t.add(new TaskItem(r, ActionCondition.FORWARD));
