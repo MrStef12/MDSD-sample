@@ -5,11 +5,9 @@
  */
 package robotdefinitionsample.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import robotdefinitionsample.DesiredProps;
+import robotdefinitionsample.exceptions.InvalidMove;
 import robotdefinitionsample.exceptions.NoShelfPickedUp;
-import robotdefinitionsample.exceptions.PropertyNotSet;
 
 /**
  *
@@ -44,7 +42,7 @@ class TaskItem {
         return ac;
     }
     
-    public void executeCommand(DesiredProps props) throws NoShelfPickedUp, Exception {
+    public void executeCommand(DesiredProps props) throws NoShelfPickedUp, InvalidMove, Exception {
         //Maybe some general code can be done here.
         
         switch (ac) {
