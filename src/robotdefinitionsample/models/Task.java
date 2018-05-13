@@ -42,7 +42,7 @@ public class Task {
         this.shouldRetry = false;
     }
     
-    public Task addTask(TaskItem item) {
+    public Task add(TaskItem item) {
         items.add(item);
         return this;
     }

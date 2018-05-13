@@ -19,22 +19,21 @@ public class MissionGenerator {
         Mission m = new Mission(grid);
         Task t = new Task("asd");
         
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-        t.addTask(new TaskItem(r, ActionCondition.CONDITIONAT)
+        t.add(new TaskItem(r, ActionCondition.FORWARD));
+        t.add(new TaskItem(r, ActionCondition.FORWARD));
+        t.add(new TaskItem(r, ActionCondition.CONDITIONAT)
                 .setAtShelfName("Shelf1")
-                .setIfTaskItems(
-                        new TaskItem(r, ActionCondition.BACKWARD),
-                        new TaskItem(r, ActionCondition.BACKWARD)
-                )
+                .setIfTaskItems((items) -> {
+                    items.add(new TaskItem(r, ActionCondition.DO))
+                })
         );
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD));
-        t.addTask(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
-        t.addTask(new TaskItem(r, ActionCondition.TURN_CW));
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
-        t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
-        t.addTask(new TaskItem(r, ActionCondition.BACKWARD));
+        t.add(new TaskItem(r, ActionCondition.FORWARD));
+        t.add(new TaskItem(r, ActionCondition.FORWARD));
+        t.add(new TaskItem(r, ActionCondition.PICKUP).setShelfToPickUp("Shelf1"));
+        t.add(new TaskItem(r, ActionCondition.TURN_CW));
+        t.add(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
+        t.add(new TaskItem(r, ActionCondition.TURN_CCW));
+        t.add(new TaskItem(r, ActionCondition.BACKWARD));
         m.addTask(t);
         return m;
     }
@@ -43,11 +42,11 @@ public class MissionGenerator {
         Mission m = new Mission(grid);
         Task t = new Task("asd");
         
-        t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
-        t.addTask(new TaskItem(r, ActionCondition.TURN_CCW));
+        t.add(new TaskItem(r, ActionCondition.TURN_CCW));
+        t.add(new TaskItem(r, ActionCondition.TURN_CCW));
         
-        t.addTask(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
-        t.addTask(new TaskItem(r, ActionCondition.CONDITION)
+        t.add(new TaskItem(r, ActionCondition.FORWARD).setTicksToGo(2));
+        t.add(new TaskItem(r, ActionCondition.CONDITION)
                 .setConditionChecker(new ICondition() {
                     @Override
                     public boolean checkCondition(int retries, Shelf shelf, Map<String, Property> properties) {
@@ -59,7 +58,7 @@ public class MissionGenerator {
                     new TaskItem(r, ActionCondition.TURN_CCW)
                 )
         );
-        t.addTask(new TaskItem(r, ActionCondition.BACKWARD));
+        t.add(new TaskItem(r, ActionCondition.BACKWARD));
         
         m.addTask(t);
         return m;

@@ -30,8 +30,8 @@ class TaskItem {
     private String atShelfName;
     private String shelfToPickUp;
     private ICondition conditionChecker;
-    private TaskItem[] ifTaskItems;
-    private TaskItem[] elseTaskItems;
+    private List<TaskItem> ifTaskItems;
+    private List<TaskItem> elseTaskItems;
     
     public TaskItem(Robot robot, ActionCondition ac) {
         this.robot = robot;
@@ -209,9 +209,9 @@ class TaskItem {
         done = true;
     }
     
-    private void conditionProcessTasks(TaskItem[] items, DesiredProps props) throws Exception {
-        for (int i=0; i<items.length; i++) {
-            TaskItem ti = items[i];
+    private void conditionProcessTasks(List<TaskItem> items, DesiredProps props) throws Exception {
+        for (int i=0; i<items.size(); i++) {
+            TaskItem ti = items.get(i);
             if (i == 0) {
                 ti.executeCommand(props);
             } else {
@@ -225,13 +225,17 @@ class TaskItem {
         return this;
     }
 
-    public TaskItem setIfTaskItems(TaskItem... ifTaskItems) {
-        this.ifTaskItems = ifTaskItems;
+    public TaskItem setIfTaskItems(IConditionTasks tasks) {
+        List<TaskItem> list = new ArrayList();
+        tasks.addTasks(list);
+        this.ifTaskItems = list;
         return this;
     }
 
-    public TaskItem setElseTaskItems(TaskItem...elseTaskItems) {
-        this.elseTaskItems = elseTaskItems;
+    public TaskItem setElseTaskItems(IConditionTasks tasks) {
+        List<TaskItem> list = new ArrayList();
+        tasks.addTasks(list);
+        this.elseTaskItems = list;
         return this;
     }
 
