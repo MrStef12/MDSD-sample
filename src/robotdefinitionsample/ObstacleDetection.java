@@ -8,7 +8,7 @@ package robotdefinitionsample;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.models.Obstacle;
-import robotdefinitionsample.models.Shelf;
+import robotdefinitionsample.models.Pickupable;
 import robotdefinitionsample.models.Vector2;
 
 /**
@@ -31,14 +31,14 @@ public class ObstacleDetection {
         return false;
     }
     
-    public static Shelf getShelfAtPos(GridPane grid, DesiredProps props) {
+    public static Pickupable getShelfAtPos(GridPane grid, DesiredProps props) {
         int x = props.getPos().getX();
         int y = props.getPos().getY();
         for(Node node : grid.getChildren()) {
-            if (node instanceof Shelf) {
-                Vector2 pos = ((Shelf) node).getPos();
+            if (node instanceof Pickupable) {
+                Vector2 pos = ((Pickupable) node).getPos();
                 if (pos.getX() == x && pos.getY() == y) {
-                    return (Shelf) node;
+                    return (Pickupable) node;
                 }
             }
         }

@@ -5,14 +5,13 @@
  */
 package robotdefinitionsample.interfaces;
 
-import java.util.Map;
-import robotdefinitionsample.models.Property;
-import robotdefinitionsample.models.Pickupable;
+import robotdefinitionsample.DesiredProps;
 
 /**
  *
  * @author stefh
  */
-public interface ICondition {
-    public boolean checkCondition(int retries, Pickupable shelf, Map<String, Property> properties);
+public interface TaskItem {
+    public void execute(DesiredProps props);
+    public boolean isDone();
 }

@@ -15,11 +15,11 @@ import robotdefinitionsample.interfaces.IMoveable;
  *
  * @author ditlev
  */
-public class Shelf extends Label implements IMoveable {
+public class Pickupable extends Label implements IMoveable {
     private Vector2 pos;
     private Map<String, Property> properties;
 
-    public Shelf(String name, Vector2 pos) {
+    public Pickupable(String name, Vector2 pos) {
         super(name);
         this.pos = pos;
         this.properties = new HashMap<>();

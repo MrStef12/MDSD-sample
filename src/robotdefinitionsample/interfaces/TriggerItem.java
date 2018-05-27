@@ -5,13 +5,12 @@
  */
 package robotdefinitionsample.interfaces;
 
-import java.util.List;
-import robotdefinitionsample.models.TaskItem;
+import robotdefinitionsample.DesiredProps;
 
 /**
  *
  * @author stefh
  */
-public interface IConditionTasks {
-    public void addTasks(List<TaskItem> items);
+public interface TriggerItem extends TaskItem {
+    public boolean isTriggered(DesiredProps props);
 }

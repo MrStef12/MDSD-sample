@@ -18,18 +18,15 @@ import robotdefinitionsample.interfaces.IMoveable;
  */
 public class Robot extends Label implements IMoveable {
     private Vector2 pos;
-    private Mission mission;
     private String name;
-    private Shelf pickedUpshelf;
-
-    public Robot(String name, Vector2 startpoint) {
+    private Pickupable pickedUp;
+    private Mission mission;
+    
+    public Robot(String name, Vector2 startpoint, Mission mission) {
         super();
         this.pos = startpoint;
         this.name = name;
-    }
-    
-    public void setMission(Mission m) {
-        this.mission = m;
+        this.mission = mission;
     }
 
     public String getName() {
@@ -48,41 +45,34 @@ public class Robot extends Label implements IMoveable {
         this.pos = pos;
     }
     
-    public Shelf getShelf() {
-        return pickedUpshelf;
+    public Pickupable getPickedUp() {
+        return pickedUp;
     }
 
     @Override
     public void execute(GridPane grid) {
+        if (!mission.isDone()) {
+            DesiredProps props = new DesiredProps(this, grid, getPos(), (int)getRotate());
+            mission.executeNext(grid, props);
+            if (!props.isDiscarded()) {
+                setPos(props.getPos());
+                setRotate(props.getRotation());
+                if (props.shouldPickUp()) {
+                    pickedUp = ObstacleDetection.getShelfAtPos(grid, props);
+                } else if (props.shouldSetDown()) {
+                    pickedUp = null;
+                }
+                if(pickedUp != null){
+                    pickedUp.setPos(props.getPos());
+                }
+            }
+        }
         if (mission.isDone()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No more tasks");
             alert.setHeaderText("No more tasks");
             alert.setContentText("The robot \"" + getName() + "\" has no more tasks in its mission to execute.");
             alert.showAndWait();
-        } else if (mission.getFailed()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Failed");
-            alert.setHeaderText("The mission failed");
-            alert.setContentText("The robot \"" + getName() + "\" execution failed");
-            alert.showAndWait();
-        } else {
-            DesiredProps props = new DesiredProps(getPos(), (int)getRotate());
-            mission.executeNext(props);
-            if (!props.isDiscarded()) {
-                setPos(props.getPos());
-                setRotate(props.getRotation());
-                if(ObstacleDetection.getShelfAtPos(grid, props) != null) {
-                    if(ObstacleDetection.getShelfAtPos(grid, props).getName().equals(props.getShelfNameToPickUp())) {
-                        if(pickedUpshelf == null) {
-                            pickedUpshelf = ObstacleDetection.getShelfAtPos(grid, props);
-                        }
-                    }
-                }
-                if(pickedUpshelf != null){
-                    pickedUpshelf.setPos(props.getPos());
-                }
-            }
         }
     }
 
