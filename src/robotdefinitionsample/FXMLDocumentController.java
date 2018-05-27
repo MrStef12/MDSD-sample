@@ -43,6 +43,7 @@ public class FXMLDocumentController implements Initializable {
         MissionGenerator generator = new MissionGenerator();
         
         Pickupable s1 = new Pickupable("Shelf1", new Vector2(2,0));
+        s1.addProperty("Weight", 100);
         Obstacle o1 = new Obstacle("Pole", new Vector2(2, 2), new Vector2(1,1));
         
         Image image = new Image(getClass().getResourceAsStream("robot.png"));

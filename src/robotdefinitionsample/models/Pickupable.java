@@ -17,7 +17,7 @@ import robotdefinitionsample.interfaces.IMoveable;
  */
 public class Pickupable extends Label implements IMoveable {
     private Vector2 pos;
-    private Map<String, Property> properties;
+    private Map<String, Integer> properties;
 
     public Pickupable(String name, Vector2 pos) {
         super(name);
@@ -34,11 +34,11 @@ public class Pickupable extends Label implements IMoveable {
         return pos;
     }
 
-    public Map<String, Property> getShelfProperties() {
+    public Map<String, Integer> getPickupableProperties() {
         return properties;
     }
     
-    public Property getProperty(String key){
+    public Integer getProperty(String key){
         return properties.get(key);
     }
 
@@ -46,8 +46,8 @@ public class Pickupable extends Label implements IMoveable {
         this.pos = pos;
     }
     
-    public void addProperty(String name, Property p) {
-        properties.put(name, p);
+    public void addProperty(String name, Integer num) {
+        properties.put(name, num);
     }
 
     @Override

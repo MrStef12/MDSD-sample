@@ -20,11 +20,12 @@ import robotdefinitionsample.interfaces.ITaskFetcher;
 public class Condition extends AbstractTaskItem {
     
     private ICondition condition;
-    private List<TaskItem> ifTasks;
-    private List<TaskItem> elseTasks;
+    private final List<TaskItem> ifTasks;
+    private final List<TaskItem> elseTasks;
 
-    public Condition() {
+    public Condition(ICondition condition) {
         super(1);
+        this.condition = condition;
         this.ifTasks = new ArrayList<>();
         this.elseTasks = new ArrayList<>();
     }
@@ -45,7 +46,7 @@ public class Condition extends AbstractTaskItem {
         if (condition.checkCondition(
                 props.getRobot().getMission().getRetries(),
                 pickedUp,
-                pickedUp != null ? pickedUp.getShelfProperties() : null
+                pickedUp != null ? pickedUp.getPickupableProperties() : null
         )) {
             props.addItemsToAdd(ifTasks);
         } else {

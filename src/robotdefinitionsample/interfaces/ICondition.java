@@ -6,7 +6,6 @@
 package robotdefinitionsample.interfaces;
 
 import java.util.Map;
-import robotdefinitionsample.models.Property;
 import robotdefinitionsample.models.Pickupable;
 
 /**
@@ -14,5 +13,5 @@ import robotdefinitionsample.models.Pickupable;
  * @author stefh
  */
 public interface ICondition {
-    public boolean checkCondition(int retries, Pickupable shelf, Map<String, Property> properties);
+    public boolean checkCondition(int retries, Pickupable shelf, Map<String, Integer> properties);
 }

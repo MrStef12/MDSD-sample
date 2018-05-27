@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import robotdefinitionsample.DesiredProps;
 import robotdefinitionsample.models.Pickupable;
-import robotdefinitionsample.models.Robot;
 import robotdefinitionsample.models.Vector2;
 
 /**
@@ -18,7 +17,7 @@ import robotdefinitionsample.models.Vector2;
  */
 public class WaitUntilPickupable extends WaitUntil {
     
-    private String pickupableName;
+    private final String pickupableName;
 
     public WaitUntilPickupable(String pickupableName, Vector2 pos) {
         super(pos);

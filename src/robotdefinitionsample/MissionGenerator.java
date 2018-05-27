@@ -8,11 +8,14 @@ package robotdefinitionsample;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import javafx.scene.layout.GridPane;
+import robotdefinitionsample.interfaces.ICondition;
 import robotdefinitionsample.interfaces.ITaskFetcher;
 import robotdefinitionsample.interfaces.TaskItem;
 import robotdefinitionsample.interfaces.TriggerItem;
 import robotdefinitionsample.models.Mission;
+import robotdefinitionsample.models.Pickupable;
 import robotdefinitionsample.models.Vector2;
 import robotdefinitionsample.models.taskitems.*;
 import robotdefinitionsample.models.triggerItems.*;
@@ -31,6 +34,24 @@ public class MissionGenerator {
             @Override
             public void addTasks(List<TaskItem> items) {
                 items.add(new Pickup());
+                items.add(new Condition(new ICondition() {
+                    @Override
+                    public boolean checkCondition(int retries, Pickupable shelf, Map<String, Integer> properties) {
+                        return properties.get("Weight") > 10;
+                    }
+                }).setIfTaskItems(new ITaskFetcher() {
+                    @Override
+                    public void addTasks(List<TaskItem> items) {
+                        items.add(new Turn(true));
+                        items.add(new Turn(false));
+                    }
+                }).setElseTaskItems(new ITaskFetcher() {
+                    @Override
+                    public void addTasks(List<TaskItem> items) {
+                        items.add(new Forward(1));
+                        items.add(new Backward(1));
+                    }
+                }));
                 items.add(new Turn(false));
                 items.add(new Forward(1));
                 items.add(new Setdown());
@@ -52,6 +73,12 @@ public class MissionGenerator {
             @Override
             public void addTasks(List<TaskItem> items) {
                 items.add(new WaitUntilPickupable("Shelf1", new Vector2(2, 1), 20, Constants.OR.CANCEL));
+            }
+        }));
+        triggers.add(new WhenAtPickupable("Shelf1", new ITaskFetcher() {
+            @Override
+            public void addTasks(List<TaskItem> items) {
+                items.add(new Pickup());
             }
         }));
         

@@ -41,6 +41,10 @@ public abstract class WhenAt implements TriggerItem {
         if (props.getWaitOr() == Constants.OR.CANCEL) {
             taskQueue.clear();
         }
+        if (!props.getItemsToAdd().isEmpty()) {
+            taskQueue.addAll(0, props.getItemsToAdd());
+            props.getItemsToAdd().clear();
+        }
     }
 
     @Override

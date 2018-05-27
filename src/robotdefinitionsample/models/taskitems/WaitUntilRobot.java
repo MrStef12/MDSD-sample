@@ -18,7 +18,7 @@ import robotdefinitionsample.models.Vector2;
  */
 public class WaitUntilRobot extends WaitUntil {
     
-    private String robotName;
+    private final String robotName;
 
     public WaitUntilRobot(String robotName, Vector2 pos) {
         super(pos);

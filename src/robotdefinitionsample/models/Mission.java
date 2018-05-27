@@ -54,6 +54,10 @@ public class Mission {
         } else {
             taskQueue.peek().execute(props);
         }
+        if (!props.getItemsToAdd().isEmpty()) {
+            taskQueue.addAll(props.getItemsToAdd());
+            props.getItemsToAdd().clear();
+        }
     }
 
     public boolean isDone() {
