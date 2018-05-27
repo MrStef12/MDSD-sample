@@ -59,6 +59,5 @@ public class Pickupable extends Label implements IMoveable {
     public void move(GridPane grid) {
         grid.getChildren().remove(this);
         grid.add(this, this.getPos().getX(), this.getPos().getY());
-        System.out.println("X: " + this.getPos().getX() + " Y: " + this.getPos().getY());
     }
 }

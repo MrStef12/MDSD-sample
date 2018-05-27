@@ -33,13 +33,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button Tick;
     
-    private List<IMoveable> movables;
+    private List<IMoveable> moveables;
 
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        movables = new ArrayList<>();
+        moveables = new ArrayList<>();
         MissionGenerator generator = new MissionGenerator();
         
         Pickupable s1 = new Pickupable("Shelf1", new Vector2(2,0));
@@ -56,10 +56,10 @@ public class FXMLDocumentController implements Initializable {
 //        r2.setGraphic(new ImageView(image));
 //        r2.setMission(generator.Robot2(r2, grid));
 
-        movables.add(r1);
-        movables.add(r2);
-        movables.add(s1);
-        movables.add(o1);
+        moveables.add(r1);
+        moveables.add(r2);
+        moveables.add(s1);
+        moveables.add(o1);
         
         grid.add(r1, r1.getPos().getX(), r1.getPos().getY());
         grid.add(r2, r2.getPos().getX(), r2.getPos().getY());
@@ -70,7 +70,7 @@ public class FXMLDocumentController implements Initializable {
 
     
     private void tick() {
-        for (IMoveable m : movables) {
+        for (IMoveable m : moveables) {
             m.execute(grid);
             m.move(grid);
         }
